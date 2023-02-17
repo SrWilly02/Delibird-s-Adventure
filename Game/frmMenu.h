@@ -194,6 +194,7 @@ namespace Game {
 			this->Controls->Add(this->btnIniciar);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->pictureBox1);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"frmMenu";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Delibird\'s Adventure";
@@ -207,12 +208,14 @@ namespace Game {
 		}
 #pragma endregion
 	Void btnIniciar_Click(Object^ sender, EventArgs^ e) {
+		//Al hacer clic, muestra e inicia el juego, junto a los valores de vidas, enemigos y tiempo
 		MyForm^ frm = gcnew MyForm((int)nudVidas->Value, (int)nudEnemigos->Value, (int)nudTiempo->Value);
 		this->Visible = false;
 		frm->ShowDialog();
 		this->Visible = true;
 	}
 	Void btnInstrucciones_Click(Object^ sender, EventArgs^ e) {
+		//Al hacer clic, muestra la ventana de las instrucciones
 		frmInstrucciones^ frmInst = gcnew frmInstrucciones();
 		frmInst->ShowDialog();
 		this->Visible = true;

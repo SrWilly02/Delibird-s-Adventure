@@ -16,10 +16,10 @@ namespace Game {
 	{
 		ControladorJuego^ juego;
 	public:
-		MyForm(int v, int e, int t)
+		MyForm(int v, int e, int t) //Pasa las variables de vidas, enemigos y tiempo, respectivamente
 		{
 			InitializeComponent();
-			juego = gcnew ControladorJuego(v, e, t);
+			juego = gcnew ControladorJuego(v, e, t); //Pasa las variables de vidas, enemigos y tiempo, respectivamente
 		}
 
 	protected:
@@ -47,6 +47,7 @@ namespace Game {
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::ComponentModel::ComponentResourceManager^ resources = (gcnew System::ComponentModel::ComponentResourceManager(MyForm::typeid));
 			this->clock = (gcnew System::Windows::Forms::Timer(this->components));
 			this->SuspendLayout();
 			// 
@@ -61,6 +62,7 @@ namespace Game {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(593, 402);
+			this->Icon = (cli::safe_cast<System::Drawing::Icon^>(resources->GetObject(L"$this.Icon")));
 			this->Name = L"MyForm";
 			this->StartPosition = System::Windows::Forms::FormStartPosition::CenterScreen;
 			this->Text = L"Delibird\'s Adventure";
@@ -72,6 +74,7 @@ namespace Game {
 #pragma endregion
 
 	Void clock_Tick(Object^ sender, EventArgs^ e) {
+		//Renderizar el juego, evitando que los elementos en pantalla parpadeen
 		Graphics^ g = this->CreateGraphics();
 		BufferedGraphicsContext^ bfc = BufferedGraphicsManager::Current;
 		BufferedGraphics^ bf = bfc->Allocate(g, this->ClientRectangle);
@@ -85,6 +88,7 @@ namespace Game {
 		if (juego->Mover(g) == false) {
 			this->clock->Enabled = false;
 
+			//Muestra el mensaje dependiendo de si ganó o perdió la partida
 			if (juego->GetResultado() == true) {
 				MessageBox::Show("Ganaste!");
 			}
